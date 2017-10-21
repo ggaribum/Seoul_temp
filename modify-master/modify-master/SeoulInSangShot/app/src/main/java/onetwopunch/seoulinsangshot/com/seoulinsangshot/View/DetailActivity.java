@@ -55,8 +55,7 @@ public class DetailActivity extends AppCompatActivity {
     public static ArrayList<Model_Best> bestList;
     //조회수용 리스트
     public static ArrayList<Model_ViewCount>viewList;
-    //좋아요용 리스트
-    //public static ArrayList<Model_LikeCount>likeList;
+
 
 
     @Override
@@ -74,18 +73,13 @@ public class DetailActivity extends AppCompatActivity {
         //fragmen에 파라미터 넘겨주기 위해 번들 생성
         Bundle bundle = new Bundle();
 
+
+        //////////////////////////////////////////////////////////
         //뽐내기 사진을 위한 정의,호출부분.
         bestList=new ArrayList<Model_Best>();
         Best_DataManager bestDataManager= new Best_DataManager();
         bestDataManager.loadData();
-
-        //조회수 다 읽어오기
-        //viewList=new ArrayList<Model_ViewCount>();
-        /*
-        View_DataManager viewDataManager= new View_DataManager();
-        viewDataManager.setData("joker1649",getIntent().getStringExtra("url"),getIntent().getStringExtra("area"));*/
-
-
+        //////////////////////////////////////////////////////////
 
 
         //ViewPager에 붙일 fragment 생성
@@ -108,9 +102,7 @@ public class DetailActivity extends AppCompatActivity {
         bundle.putString("filter", getIntent().getStringExtra("filter"));
         bundle.putString("theme1", getIntent().getStringExtra("theme1"));
         bundle.putString("theme2", getIntent().getStringExtra("theme2"));
-        bundle.putString("time", getIntent().getStringExtra("time"));
         bundle.putString("tip", getIntent().getStringExtra("tip"));
-        bundle.putString("viewCount",String.valueOf(viewCountInt));
 
         //fragment info,fragment Comment로 파라미터(bundle) 전송
         fragmentInfo.setArguments(bundle);

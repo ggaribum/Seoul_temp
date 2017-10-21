@@ -209,7 +209,7 @@ public class Fragment_Detail_Comment extends Fragment implements View.OnClickLis
     //setPostiveButton이 "No"로 되어있음 위치때문에 순서 바꿨다.
     private void DialogSimple(final String message , final String initials){
         AlertDialog.Builder alt_bld = new AlertDialog.Builder(getActivity());
-        alt_bld.setMessage("Do you want to submit this message ?").setCancelable(
+        alt_bld.setMessage("메세지를 전송 하시겠습니까 ? ").setCancelable(
                 true).setPositiveButton("No",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {

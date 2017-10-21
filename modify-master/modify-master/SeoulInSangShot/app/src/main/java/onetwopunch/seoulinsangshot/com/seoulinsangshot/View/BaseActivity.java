@@ -28,8 +28,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import onetwopunch.seoulinsangshot.com.seoulinsangshot.DataManager.Album_DataManager;
+import onetwopunch.seoulinsangshot.com.seoulinsangshot.DataManager.Main_DataManager;
 import onetwopunch.seoulinsangshot.com.seoulinsangshot.DataManager.Test_DataManager;
 import onetwopunch.seoulinsangshot.com.seoulinsangshot.Model.Model_Image;
+import onetwopunch.seoulinsangshot.com.seoulinsangshot.Model.Model_Main;
 import onetwopunch.seoulinsangshot.com.seoulinsangshot.Model.Model_Test;
 import onetwopunch.seoulinsangshot.com.seoulinsangshot.R;
 
@@ -39,6 +41,7 @@ public class BaseActivity extends AppCompatActivity {
 
     public static List<Model_Test> testArr;
     public static ArrayList<Model_Image> imageList;
+    public static ArrayList<Model_Main> mainList;
     Intent intent;
 
     @Override
@@ -52,11 +55,14 @@ public class BaseActivity extends AppCompatActivity {
 
         testArr = new ArrayList<>();
         imageList = new ArrayList<>();
+        mainList= new ArrayList<>();
 
         Test_DataManager test_dataManager = new Test_DataManager();
         test_dataManager.loadData();
         Album_DataManager album_DataManager = new Album_DataManager();
         album_DataManager.loadData();
+        Main_DataManager main_dataManager = new Main_DataManager();
+        main_dataManager.loadData();
 
         if(!checkPermissionWRITE_EXTERNAL_STORAGE(this)){
             Toast.makeText(this, "권한 허가가 이루어지지 않았습니다. 앱을 완전히 종료하고 다시 실행시켜 주십시오.", Toast.LENGTH_LONG).show();

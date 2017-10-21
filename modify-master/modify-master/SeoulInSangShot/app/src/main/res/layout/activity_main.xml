@@ -30,7 +30,7 @@
             android:autoStart="true"
             android:background="@android:color/transparent"
 
-            android:flipInterval="2000"
+            android:flipInterval="2500"
             android:inAnimation="@animator/right_in"
             android:outAnimation="@animator/left_out"></AdapterViewFlipper>
     <LinearLayout
@@ -70,10 +70,26 @@
             android:layout_height="25dp"
             android:padding="10dp"
             android:src="@drawable/indexbefore" />
+        <ImageView
+            android:id="@+id/indexLight6"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:padding="10dp"
+            android:src="@drawable/indexbefore" />
+        <ImageView
+            android:id="@+id/indexLight7"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:padding="10dp"
+            android:src="@drawable/indexbefore" />
+
+
+
     </LinearLayout>
         </LinearLayout>>
 
     <RelativeLayout
+        android:id="@+id/mainRL"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="3.5">
@@ -150,28 +166,28 @@
             android:textColor="@android:color/darker_gray" />
 
         <TextView
-            android:id="@+id/main_likeText"
+            android:id="@+id/main_theme1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/main_tempText"
             android:layout_alignTop="@+id/main_tempText"
             android:layout_marginLeft="15dp"
             android:layout_marginStart="15dp"
-            android:textColor="#ffffff"
+            android:textColor="@android:color/darker_gray"
             android:layout_toRightOf="@+id/main_tempText"
-            android:text="777" />
+            android:text="theme of image" />
 
-        <TextView
-            android:id="@+id/main_tempText2"
+<!--        <TextView
+            android:id="@+id/main_theme2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/main_likeText"
-            android:layout_alignTop="@+id/main_likeText"
+            android:layout_alignBottom="@+id/main_theme1"
+            android:layout_alignTop="@+id/main_theme1"
             android:layout_marginLeft="5dp"
-            android:layout_toEndOf="@+id/main_likeText"
-            android:layout_toRightOf="@+id/main_likeText"
-            android:text="likes"
-            android:textColor="@android:color/darker_gray" />
+            android:layout_toEndOf="@+id/main_theme1"
+            android:layout_toRightOf="@+id/main_theme1"
+            android:text="theme"
+            android:textColor="@android:color/darker_gray" />-->
     </RelativeLayout>
 
     <LinearLayout

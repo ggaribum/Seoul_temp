@@ -45,7 +45,6 @@ public class Adapter_Best extends RecyclerView.Adapter<Adapter_Best.ViewHolder> 
     public void onBindViewHolder(ViewHolder holder, final int position) {
 
        holder.bestID.setText("@ "+tempArr.get(position).getId());
-        holder.bestHits.setText(tempArr.get(position).getView()+" Hits");
         holder.bestLike.setText(tempArr.get(position).getLikecount()+" Likes");
         Picasso
                 .with(adapterContext)
@@ -94,7 +93,6 @@ public class Adapter_Best extends RecyclerView.Adapter<Adapter_Best.ViewHolder> 
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
         public TextView bestID;
-        public TextView bestHits;
         public TextView bestLike;
         public ImageView bestImage;
         public CardView card;
@@ -104,7 +102,6 @@ public class Adapter_Best extends RecyclerView.Adapter<Adapter_Best.ViewHolder> 
             super(itemView);
 
             bestID=(TextView)itemView.findViewById(R.id.bestID_TextView);
-            bestHits=(TextView)itemView.findViewById(R.id.bestHITS_TextView);
             bestLike=(TextView)itemView.findViewById(R.id.bestLIKE_TextView);
             bestImage=(ImageView)itemView.findViewById(R.id.bestImageView);
 

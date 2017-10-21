@@ -18,6 +18,7 @@ import android.widget.AdapterViewFlipper;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 
 import onetwopunch.seoulinsangshot.com.seoulinsangshot.Controller.BottomNavigationViewHelper;
 import onetwopunch.seoulinsangshot.com.seoulinsangshot.DataManager.Area_DataManager;
+import onetwopunch.seoulinsangshot.com.seoulinsangshot.Model.Model_Main;
 import onetwopunch.seoulinsangshot.com.seoulinsangshot.Model.Model_Test;
 import onetwopunch.seoulinsangshot.com.seoulinsangshot.R;
 
@@ -36,16 +38,18 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     Intent primary;
     Intent album;
     Intent notify;
+    Intent detail;
 
     //avf를 위한 부분
     AdapterViewFlipper avf;
     ImageView mainImage;
     TextView hitTv;
-    TextView likeTv;
+    TextView themeTv;
     TextView nameKorean;
     TextView nameEnglish;
     ArrayList<ImageView> indexes = new ArrayList<ImageView>();
-    ArrayList<Model_Test> tempList = new ArrayList<Model_Test>();
+    ArrayList<Model_Main> tempList = new ArrayList<Model_Main>();
+    RelativeLayout mainRelativeLayout;
 
     //온터치리스너를 위한 처리 실수
     float xAtDown;
@@ -91,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         primary = new Intent(getApplicationContext(), PrimaryActivity.class);
         album = new Intent(getApplicationContext(), AlbumActivity.class);
         notify = new Intent(getApplicationContext(), NotifyActivity.class);
+        detail = new Intent(getApplicationContext(),DetailActivity.class);
 
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setSelectedItemId(R.id.navigation_home);
@@ -107,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             }
         });
 
-        Area_DataManager manager=new Area_DataManager();
+        Area_DataManager manager = new Area_DataManager();
         manager.loadData();
 
 
@@ -122,11 +127,15 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         indexes.add((ImageView) findViewById(R.id.indexLight3));
         indexes.add((ImageView) findViewById(R.id.indexLight4));
         indexes.add((ImageView) findViewById(R.id.indexLight5));
+        indexes.add((ImageView) findViewById(R.id.indexLight6));
+        indexes.add((ImageView) findViewById(R.id.indexLight7));
 
-        nameKorean =(TextView)findViewById(R.id.main_areaName) ;
-        hitTv=(TextView)findViewById(R.id.main_hitText);
-        likeTv=(TextView)findViewById(R.id.main_likeText);
 
+        nameKorean = (TextView) findViewById(R.id.main_areaName);
+        nameEnglish=(TextView)findViewById(R.id.main_areaName2);
+        hitTv = (TextView) findViewById(R.id.main_hitText);
+        themeTv = (TextView) findViewById(R.id.main_theme1);
+        mainRelativeLayout=(RelativeLayout)findViewById(R.id.mainRL);
 
         //아직 메인을 위한 서버가 없으므로
 //        tempList.add(BaseActivity.testArr.get(0));
@@ -138,18 +147,19 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         /*
             우선 for문을 통해서 base에서 로드가 안 됬다면 아예 대표사진도 안 뜨도록 설정함.
          */
-        Log.v("Size", String.valueOf(BaseActivity.testArr.size()));
-        for(int i=0; i<BaseActivity.testArr.size(); i++){
-            tempList.add(BaseActivity.testArr.get(i));
-            if(i == 5){
-                i = BaseActivity.testArr.size();
+        Log.v("Size", String.valueOf(BaseActivity.mainList.size()));
+        for (int i = 0; i < BaseActivity.mainList.size(); i++) {
+            tempList.add(BaseActivity.mainList.get(i));
+            if (i == 6) {
+                i = BaseActivity.mainList.size();
             }
         }
 
 
+
         //어뎁터 연결 ,널포인터 뜰 수 있음.
         avf = (AdapterViewFlipper) findViewById(R.id.main_AVF);
-        avf.setAdapter(new galleryAdapter(this,tempList)); //갤러리 어뎁터에 연결
+        avf.setAdapter(new galleryAdapter(this, tempList)); //갤러리 어뎁터에 연결
         avf.setOnTouchListener(this);//터치리스너에 연결
 
         //onCreate 종료
@@ -160,22 +170,17 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         if (v != avf) return false;
-        if (event.getAction() == MotionEvent.ACTION_DOWN)
-        {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
             xAtDown = event.getX();
         }
         //else if 부분이 중요함.
-        else if (event.getAction() == MotionEvent.ACTION_UP)
-        {
+        else if (event.getAction() == MotionEvent.ACTION_UP) {
             xAtUp = event.getX();
-            if (xAtDown > xAtUp)
-            {
+            if (xAtDown > xAtUp) {
                 avf.setInAnimation(v.getContext(), R.animator.right_in);
                 avf.setOutAnimation(v.getContext(), R.animator.left_out);
                 avf.showNext();
-            }
-            else if (xAtDown < xAtUp)
-            {
+            } else if (xAtDown < xAtUp) {
                 avf.setInAnimation(v.getContext(), R.animator.left_in);
                 avf.setOutAnimation(v.getContext(), R.animator.right_out);
                 avf.showPrevious();
@@ -202,7 +207,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         return true;
     }
 
-    public void setIntentFlag(Intent intent){
+    public void setIntentFlag(Intent intent) {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -213,12 +218,12 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     public class galleryAdapter extends BaseAdapter {
         private final Context mContext;
         LayoutInflater inflater;
-        ArrayList<Model_Test>tempArr;
+        ArrayList<Model_Main> tempArr;
 
 
-        public galleryAdapter(Context mContext,ArrayList<Model_Test> tempArr) {
+        public galleryAdapter(Context mContext, ArrayList<Model_Main> tempArr) {
             this.mContext = mContext;
-            this.tempArr=tempArr;
+            this.tempArr = tempArr;
             inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
@@ -238,26 +243,51 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         }
 
         @Override
-        public View getView(int position, View converView, ViewGroup parent) {
+        public View getView(final int position, View converView, ViewGroup parent) {
 
             if (converView == null) {
                 converView = inflater.inflate(R.layout.item_main, parent, false);
             }
 
-            ImageView mimageView = (ImageView)converView.findViewById(R.id.mainImage);
+            //정보 부분 클릭 시 (RelativeLayout클릭 시) DetailActivity로 인탠트
+            mainRelativeLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    detail.putExtra("area", tempArr.get(position).getArea());
+                    detail.putExtra("initials", tempArr.get(position).getInit());
+                    detail.putExtra("name", tempArr.get(position).getName());
+                    detail.putExtra("lat", tempArr.get(position).getLat());
+                    detail.putExtra("lng", tempArr.get(position).getLng());
+                    detail.putExtra("subway", tempArr.get(position).getSubway());
+                    detail.putExtra("bus", tempArr.get(position).getBus());
+                    detail.putExtra("bicycle", tempArr.get(position).getBicycle());
+                    detail.putExtra("url", tempArr.get(position).getUrl());
+                    detail.putExtra("smartPhone", tempArr.get(position).getSmartPhone());
+                    detail.putExtra("filter", tempArr.get(position).getFilter());
+                    detail.putExtra("theme1", tempArr.get(position).getTheme1());
+                    detail.putExtra("theme2", tempArr.get(position).getTheme2());
+                    detail.putExtra("tip", tempArr.get(position).getTip());
+                    setIntentFlag(detail);
+                    mContext.startActivity(detail);
+                }
+            });
+
+
+
+            ImageView mimageView = (ImageView) converView.findViewById(R.id.mainImage);
             Picasso.with(mContext).load(tempArr.get(position).getUrl()).into(mimageView);
-            ;
 
-
-            for(int i=0;i<tempArr.size();i++)
-            {
+            for (int i = 0; i < tempArr.size(); i++) {
                 String areaName = tempArr.get(i).getName();
-                // baseActivity에서는 좋아요수나 조회수를 안 읽어옴
-                // Model_Test에는 두 데이터가 없음.
-                //String hits=tempArr.get(i).getHit();
-                //String likes=tempArr.get(i).getLike();
-                if(i==position){
-                   nameKorean.setText(areaName);
+                String areaEname = tempArr.get(i).getEname();
+                String hits=tempArr.get(i).getHit();
+                String theme=tempArr.get(i).getTheme1();
+                if (i == position) {
+                    nameEnglish.setText(areaEname);
+                    nameKorean.setText(areaName);
+                    hitTv.setText(hits);
+                    themeTv.setText("# "+theme);
                 }
             }
             //사진이 전환되면서 버튼 위 indexLight도 변하게끔 하는 부분.
@@ -269,6 +299,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                     index.setImageResource(R.drawable.indexbefore);
                 }
             }
+
             return converView;
         }
 

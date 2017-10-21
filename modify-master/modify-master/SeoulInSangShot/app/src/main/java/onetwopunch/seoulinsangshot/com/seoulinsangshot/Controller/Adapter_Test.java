@@ -3,6 +3,7 @@ package onetwopunch.seoulinsangshot.com.seoulinsangshot.Controller;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,7 +69,6 @@ public class Adapter_Test extends RecyclerView.Adapter<Adapter_Test.ViewHolder> 
                 detail.putExtra("filter", tempArr.get(position).getFilter());
                 detail.putExtra("theme1", tempArr.get(position).getTheme1());
                 detail.putExtra("theme2", tempArr.get(position).getTheme2());
-                detail.putExtra("time", tempArr.get(position).getTime());
                 detail.putExtra("tip", tempArr.get(position).getTip());
 
                 setIntentFlag(detail);

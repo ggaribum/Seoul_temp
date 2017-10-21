@@ -37,6 +37,7 @@
         <activity android:name=".View.PostActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".View.Best_ReplyActivity"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait"/>
         <activity android:name=".View.NotifyActivity"
             android:screenOrientation="portrait" />

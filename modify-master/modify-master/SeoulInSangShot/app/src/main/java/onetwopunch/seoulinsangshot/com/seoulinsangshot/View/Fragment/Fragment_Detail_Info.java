@@ -268,7 +268,6 @@ public class Fragment_Detail_Info extends Fragment {
         filter = getArguments().getString("filter");
         theme1 = getArguments().getString("theme1");
         theme2 = getArguments().getString("theme2");
-        time = getArguments().getString("time");
         tip = getArguments().getString("tip");
         ////////////////////////////////////////////////////
 
